@@ -1,0 +1,27 @@
+{
+  "$schema": "../node_modules/@companion-module/base/assets/manifest.schema.json",
+  "type": "connection",
+  "id": "rgblink-vue-ptz",
+  "name": "RGBlink VUE PTZ",
+  "shortname": "RGBlink VUE",
+  "description": "Control RGBlink VUE RGB30X-POE-TLY PTZ cameras with documented VISCA commands",
+  "version": "0.1.0",
+  "license": "MIT",
+  "repository": "git+https://github.com/kalidatuna/rgblink-vue-companion-poc.git",
+  "bugs": "https://github.com/kalidatuna/rgblink-vue-companion-poc/issues",
+  "maintainers": [
+    {
+      "name": "David Jamburia"
+    }
+  ],
+  "runtime": {
+    "type": "node22",
+    "api": "nodejs-ipc",
+    "apiVersion": "0.0.0",
+    "entrypoint": "../src/main.js"
+  },
+  "legacyIds": [],
+  "manufacturer": "RGBlink",
+  "products": ["VUE RGB30X-POE-TLY"],
+  "keywords": ["Camera", "PTZ", "VISCA", "Tally"]
+}

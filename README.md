@@ -30,4 +30,24 @@ Current result: **21 protocol/validation checks pass**.
 
 The public manual confirms the VISCA port but does not clearly specify the IP framing/transport semantics in the command appendix. This proof does not pretend raw UDP or raw TCP has been validated against the buyer's firmware. Camera payloads and the default port are documented; packet framing and response behavior still need one live-camera test or the buyer's API/CGI document.
 
-A paid first milestone would wrap this protocol layer in the current Companion module framework, expose the actions, add config fields and presets, and validate responses against the physical RGB30X-POE-TLY.
+## Companion module skeleton
+
+`companion-module/` now wraps the verified command layer in Bitfocus's current `@companion-module/base` module shape. It includes:
+
+- Companion manifest and module metadata;
+- target host / port / camera-ID configuration;
+- dry-run mode enabled by default;
+- 12 registered actions covering PTZ, lens, focus, presets, exposure, white balance, backlight and both tally colors;
+- `last_command_hex` and `send_mode` variables;
+- raw VISCA UDP live-test mode, deliberately labelled as unverified until a physical buyer camera/API document confirms transport/framing.
+
+Validation that does **not** require hardware:
+
+```bash
+node companion-module/test/protocol.test.js
+node companion-module/test/actions.test.js
+```
+
+Current result: **17 protocol checks pass; 12 Companion actions register and 12 callbacks generate the expected packets.**
+
+The remaining paid milestone is live-camera transport/response validation plus any advanced IP/CGI controls exposed by the buyer's private API documentation.

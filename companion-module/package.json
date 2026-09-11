@@ -1,0 +1,26 @@
+{
+  "name": "rgblink-vue-ptz",
+  "version": "0.1.0",
+  "description": "Bitfocus Companion module proof for RGBlink VUE RGB30X-POE-TLY cameras",
+  "main": "src/main.js",
+  "scripts": {
+    "package": "companion-module-build",
+    "test:protocol": "node test/protocol.test.js"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kalidatuna/rgblink-vue-companion-poc.git"
+  },
+  "engines": {
+    "node": "^22.20",
+    "yarn": "^4"
+  },
+  "dependencies": {
+    "@companion-module/base": "~2.0.4"
+  },
+  "devDependencies": {
+    "@companion-module/tools": "^3.1.0"
+  },
+  "packageManager": "yarn@4.17.0"
+}
