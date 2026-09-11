@@ -1,0 +1,25 @@
+{
+  "milestone": "RGBlink VUE Companion core PTZ controls",
+  "model": "RGB30X-POE-TLY",
+  "documented_visca_port": 3001,
+  "actions": [
+    "power on/off",
+    "pan/tilt 8 directions + stop",
+    "home",
+    "variable zoom tele/wide + stop",
+    "variable focus near/far + stop",
+    "autofocus/manual focus",
+    "preset set/recall/clear 0-254",
+    "exposure mode auto/manual/shutter/iris/bright",
+    "iris reset/up/down",
+    "white balance modes",
+    "backlight on/off",
+    "red tally on/off",
+    "green tally on/off"
+  ],
+  "live_validation_needed": [
+    "IP transport: TCP vs UDP and any framing header",
+    "ack/completion response behavior on installed firmware",
+    "advanced CGI/HTTP controls not covered by the public VISCA appendix"
+  ]
+}
