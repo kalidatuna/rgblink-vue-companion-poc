@@ -8,6 +8,7 @@ Run from the repository root:
 
 ```sh
 node test.js
+node test-validation.js
 node companion-module/test/protocol.test.js
 node companion-module/test/actions.test.js
 ```

@@ -52,12 +52,12 @@ const Commands = {
       iris: 0x0b,
       bright: 0x0d,
     }
-    if (!(mode in modes)) throw new Error(`unknown exposure mode: ${mode}`)
+    if (!(Object.prototype.hasOwnProperty.call(modes, mode))) throw new Error(`unknown exposure mode: ${mode}`)
     return cmd([0x01, 0x04, 0x39, modes[mode]], id)
   },
   iris(action, id = 1) {
     const actions = { reset: 0x00, up: 0x02, down: 0x03 }
-    if (!(action in actions)) throw new Error(`unknown iris action: ${action}`)
+    if (!(Object.prototype.hasOwnProperty.call(actions, action))) throw new Error(`unknown iris action: ${action}`)
     return cmd([0x01, 0x04, 0x0b, actions[action]], id)
   },
   backlight(on, id = 1) {
@@ -73,7 +73,7 @@ const Commands = {
       manual: 0x05,
       k6500: 0x06,
     }
-    if (!(mode in modes)) throw new Error(`unknown white balance mode: ${mode}`)
+    if (!(Object.prototype.hasOwnProperty.call(modes, mode))) throw new Error(`unknown white balance mode: ${mode}`)
     return cmd([0x01, 0x04, 0x35, modes[mode]], id)
   },
 
@@ -107,7 +107,7 @@ const Commands = {
       stop: [0x03, 0x03],
     }
     const d = dirs[direction]
-    if (!d) throw new Error(`unknown direction: ${direction}`)
+    if (!Object.prototype.hasOwnProperty.call(dirs, direction)) throw new Error(`unknown direction: ${direction}`)
     return cmd(
       [
         0x01,

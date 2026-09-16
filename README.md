@@ -10,6 +10,7 @@ Use Node.js 22.20+ (the module declares Node 22 support). The offline tests need
 git clone https://github.com/kalidatuna/rgblink-vue-companion-poc.git
 cd rgblink-vue-companion-poc
 node test.js
+node test-validation.js
 node companion-module/test/protocol.test.js
 node companion-module/test/actions.test.js
 ```
