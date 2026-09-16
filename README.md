@@ -1,5 +1,7 @@
 # RGBlink VUE / Bitfocus Companion PoC
 
+[![CI](https://github.com/kalidatuna/rgblink-vue-companion-poc/actions/workflows/ci.yml/badge.svg)](https://github.com/kalidatuna/rgblink-vue-companion-poc/actions/workflows/ci.yml)
+
 A VISCA command generator and Bitfocus Companion module skeleton for RGBlink VUE RGB30X-POE-TLY cameras. This repository separates offline command checks from the live transport validation still needed on a physical camera.
 
 ## Try it without hardware

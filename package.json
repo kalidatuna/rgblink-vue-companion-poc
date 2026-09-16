@@ -1,0 +1,19 @@
+{
+  "name": "rgblink-vue-companion-poc",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Offline VISCA protocol and Companion action tests for RGBlink VUE",
+  "scripts": {
+    "test": "node test.js && node test-validation.js && node companion-module/test/protocol.test.js && node companion-module/test/actions.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kalidatuna/rgblink-vue-companion-poc.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kalidatuna/rgblink-vue-companion-poc/issues"
+  },
+  "engines": {
+    "node": ">=22.20"
+  }
+}

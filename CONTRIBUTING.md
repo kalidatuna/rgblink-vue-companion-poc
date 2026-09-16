@@ -27,3 +27,7 @@ For bug reports, include runtime versions, a minimal reproduction, expected and 
 ## Companion packaging
 
 The module declares Node `^22.20` and Yarn `4.17.0`. Packaging also requires the dependencies in `companion-module/package.json` and runs the `package` script from that directory. The repository currently has no dependency lockfile, so packaging is not reproducible and is not covered by the offline checks. Do not treat offline test success as proof that the module can be installed in Companion.
+
+## Continuous integration
+
+CI runs the offline suite on every push and pull request with read-only repository permissions. Action versions are pinned to commit IDs. The matrix covers Node.js 22 and 24. Run `npm test` from the root for the complete suite; no dependency installation is needed. The module directory also exposes `npm test` for its two local suites.

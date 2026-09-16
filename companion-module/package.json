@@ -5,12 +5,14 @@
   "main": "src/main.js",
   "scripts": {
     "package": "companion-module-build",
-    "test:protocol": "node test/protocol.test.js"
+    "test:protocol": "node test/protocol.test.js",
+    "test": "node test/protocol.test.js && node test/actions.test.js"
   },
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kalidatuna/rgblink-vue-companion-poc.git"
+    "url": "git+https://github.com/kalidatuna/rgblink-vue-companion-poc.git",
+    "directory": "companion-module"
   },
   "engines": {
     "node": "^22.20",
@@ -22,5 +24,8 @@
   "devDependencies": {
     "@companion-module/tools": "^3.1.0"
   },
-  "packageManager": "yarn@4.17.0"
+  "packageManager": "yarn@4.17.0",
+  "bugs": {
+    "url": "https://github.com/kalidatuna/rgblink-vue-companion-poc/issues"
+  }
 }
