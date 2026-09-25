@@ -4,6 +4,7 @@ const { InstanceBase, Regex, runEntrypoint, InstanceStatus } = require('@compani
 const UpgradeScripts = require('./upgrades')
 const UpdateActions = require('./actions')
 const UpdateVariableDefinitions = require('./variables')
+const { parseUdpPort } = require('./transport')
 
 class RGBlinkVueInstance extends InstanceBase {
   constructor(internal) {
@@ -49,6 +50,13 @@ class RGBlinkVueInstance extends InstanceBase {
       return
     }
 
+    try {
+      this.port = parseUdpPort(this.config.port)
+    } catch (err) {
+      this.updateStatus(InstanceStatus.BadConfig, err.message)
+      return
+    }
+
     this.socket = this.createSharedUdpSocket('udp4', () => {})
     this.socket.on('error', (err) => {
       this.updateStatus(InstanceStatus.ConnectionFailure, err.message)
@@ -69,9 +77,8 @@ class RGBlinkVueInstance extends InstanceBase {
       throw new Error('Live transport is not configured')
     }
 
-    const port = Number(this.config.port || 3001)
     await new Promise((resolve, reject) => {
-      this.socket.send(buffer, port, this.config.host, (err) => (err ? reject(err) : resolve()))
+      this.socket.send(buffer, this.port, this.config.host, (err) => (err ? reject(err) : resolve()))
     })
   }
 
