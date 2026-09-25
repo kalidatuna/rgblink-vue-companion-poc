@@ -36,5 +36,11 @@ for (const invalid of [NaN, Infinity, 1.5, '', null, 'abc']) {
   assert.throws(() => Commands.home(invalid), /expected an integer/)
 }
 assert.equal(hex(Commands.zoomTele()), '8101040723FF')
+for (const id of [0, 8, -1]) {
+  assert.throws(() => Commands.home(id), /camera ID/)
+}
+for (const n of [-1, 255]) {
+  assert.throws(() => Commands.presetSet(n), /preset number/)
+}
 
 console.log(`${cases.length + 2} Companion-module protocol checks passed`)

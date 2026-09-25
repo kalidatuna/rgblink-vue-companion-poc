@@ -7,8 +7,14 @@ function clamp(n, lo, hi) {
   return Math.max(lo, Math.min(hi, Number(n)))
 }
 
+function requireRange(n, lo, hi, label) {
+  const value = clamp(n, lo, hi)
+  if (value !== Number(n)) throw new Error(`${label} must be between ${lo} and ${hi}`)
+  return value
+}
+
 function cameraAddr(id) {
-  const safeId = clamp(id === undefined ? 1 : id, 1, 7)
+  const safeId = requireRange(id === undefined ? 1 : id, 1, 7, 'camera ID')
   return 0x80 + safeId
 }
 
@@ -57,9 +63,9 @@ const Commands = {
     return cmd([0x01, 0x04, 0x35, modes[mode]], id)
   },
 
-  presetRecall: (n, id) => cmd([0x01, 0x04, 0x3f, 0x02, clamp(n, 0, 254)], id),
-  presetSet: (n, id) => cmd([0x01, 0x04, 0x3f, 0x01, clamp(n, 0, 254)], id),
-  presetClear: (n, id) => cmd([0x01, 0x04, 0x3f, 0x00, clamp(n, 0, 254)], id),
+  presetRecall: (n, id) => cmd([0x01, 0x04, 0x3f, 0x02, requireRange(n, 0, 254, 'preset number')], id),
+  presetSet: (n, id) => cmd([0x01, 0x04, 0x3f, 0x01, requireRange(n, 0, 254, 'preset number')], id),
+  presetClear: (n, id) => cmd([0x01, 0x04, 0x3f, 0x00, requireRange(n, 0, 254, 'preset number')], id),
 
   tallyRed: (on) => Buffer.from([0x81, 0x01, 0x7e, 0x01, 0x0a, 0x00, on ? 0x01 : 0x02, 0xff]),
   tallyGreen: (on) => Buffer.from([0x81, 0x01, 0x7e, 0x01, 0x0a, 0x00, on ? 0x03 : 0x04, 0xff]),
