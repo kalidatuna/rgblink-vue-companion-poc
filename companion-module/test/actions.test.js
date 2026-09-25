@@ -64,6 +64,16 @@ async function run() {
     '81010604FF',
   ])
 
+  for (const [action, options] of [
+    ['zoom', { direction: 'invalid', speed: 3 }],
+    ['focus', { direction: 'invalid', speed: 3 }],
+    ['preset', { operation: 'invalid', number: 1 }],
+    ['autofocus', { state: 'invalid' }],
+  ]) {
+    await assert.rejects(definitions[action].callback({ options }), /unknown/)
+  }
+  assert.equal(sent.length, 12)
+
   console.log(`${expectedActions.length} Companion actions registered; ${sent.length} callbacks verified`)
 }
 

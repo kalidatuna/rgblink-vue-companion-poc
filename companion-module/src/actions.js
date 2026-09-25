@@ -7,6 +7,11 @@ const onOff = [
   { id: 'off', label: 'Off' },
 ]
 
+function requireChoice(value, choices, label) {
+  if (!choices.includes(value)) throw new Error(`unknown ${label}: ${value}`)
+  return value
+}
+
 module.exports = function updateActions(self) {
   const cameraId = () => Number(self.config.cameraId || 1)
   const send = (buffer) => self.sendVisca(buffer)
@@ -61,7 +66,7 @@ module.exports = function updateActions(self) {
         { id: 'speed', type: 'number', label: 'Speed', default: 3, min: 0, max: 15 },
       ],
       callback: async (event) => {
-        const direction = event.options.direction
+        const direction = requireChoice(event.options.direction, ['tele', 'wide', 'stop'], 'zoom direction')
         const buffer = direction === 'tele'
           ? Commands.zoomTele(event.options.speed, cameraId())
           : direction === 'wide'
@@ -88,7 +93,7 @@ module.exports = function updateActions(self) {
         { id: 'speed', type: 'number', label: 'Speed', default: 3, min: 0, max: 15 },
       ],
       callback: async (event) => {
-        const direction = event.options.direction
+        const direction = requireChoice(event.options.direction, ['near', 'far', 'stop'], 'focus direction')
         const buffer = direction === 'near'
           ? Commands.focusNear(event.options.speed, cameraId())
           : direction === 'far'
@@ -101,7 +106,7 @@ module.exports = function updateActions(self) {
     autofocus: {
       name: 'Autofocus',
       options: [{ id: 'state', type: 'dropdown', label: 'State', default: 'on', choices: onOff }],
-      callback: async (event) => send(Commands.autofocus(event.options.state === 'on', cameraId())),
+      callback: async (event) => send(Commands.autofocus(requireChoice(event.options.state, ['on', 'off'], 'autofocus state') === 'on', cameraId())),
     },
 
     preset: {
@@ -121,6 +126,7 @@ module.exports = function updateActions(self) {
         { id: 'number', type: 'number', label: 'Preset number', default: 1, min: 0, max: 254 },
       ],
       callback: async (event) => {
+        requireChoice(event.options.operation, ['recall', 'set', 'clear'], 'preset operation')
         const n = event.options.number
         const buffer = event.options.operation === 'set'
           ? Commands.presetSet(n, cameraId())
@@ -176,19 +182,19 @@ module.exports = function updateActions(self) {
     backlight: {
       name: 'Backlight compensation',
       options: [{ id: 'state', type: 'dropdown', label: 'State', default: 'off', choices: onOff }],
-      callback: async (event) => send(Commands.backlight(event.options.state === 'on', cameraId())),
+      callback: async (event) => send(Commands.backlight(requireChoice(event.options.state, ['on', 'off'], 'backlight state') === 'on', cameraId())),
     },
 
     tally_red: {
       name: 'Tally red',
       options: [{ id: 'state', type: 'dropdown', label: 'State', default: 'on', choices: onOff }],
-      callback: async (event) => send(Commands.tallyRed(event.options.state === 'on')),
+      callback: async (event) => send(Commands.tallyRed(requireChoice(event.options.state, ['on', 'off'], 'tally state') === 'on')),
     },
 
     tally_green: {
       name: 'Tally green',
       options: [{ id: 'state', type: 'dropdown', label: 'State', default: 'on', choices: onOff }],
-      callback: async (event) => send(Commands.tallyGreen(event.options.state === 'on')),
+      callback: async (event) => send(Commands.tallyGreen(requireChoice(event.options.state, ['on', 'off'], 'tally state') === 'on')),
     },
   })
 }
