@@ -48,5 +48,9 @@ for (const speed of [-1, 16]) {
 }
 assert.throws(() => Commands.panTilt('left', 25, 8), /pan speed/)
 assert.throws(() => Commands.panTilt('left', 8, 21), /tilt speed/)
+for (const command of [Commands.power, Commands.autofocus, Commands.backlight, Commands.tallyRed, Commands.tallyGreen]) {
+  assert.throws(() => command('off'), /must be true or false/)
+  assert.throws(() => command(undefined), /must be true or false/)
+}
 
 console.log(`${cases.length + 2} Companion-module protocol checks passed`)

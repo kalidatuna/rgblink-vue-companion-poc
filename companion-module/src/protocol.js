@@ -22,8 +22,13 @@ function cmd(bytes, id) {
   return Buffer.from([cameraAddr(id), ...bytes, 0xff])
 }
 
+function requireBoolean(value, label) {
+  if (typeof value !== 'boolean') throw new Error(`${label} must be true or false`)
+  return value
+}
+
 const Commands = {
-  power: (on, id) => cmd([0x01, 0x04, 0x00, on ? 0x02 : 0x03], id),
+  power: (on, id) => cmd([0x01, 0x04, 0x00, requireBoolean(on, 'power') ? 0x02 : 0x03], id),
   home: (id) => cmd([0x01, 0x06, 0x04], id),
 
   zoomStop: (id) => cmd([0x01, 0x04, 0x07, 0x00], id),
@@ -33,7 +38,7 @@ const Commands = {
   focusStop: (id) => cmd([0x01, 0x04, 0x08, 0x00], id),
   focusFar: (speed = 3, id) => cmd([0x01, 0x04, 0x08, 0x20 + requireRange(speed, 0, 15, 'focus speed')], id),
   focusNear: (speed = 3, id) => cmd([0x01, 0x04, 0x08, 0x30 + requireRange(speed, 0, 15, 'focus speed')], id),
-  autofocus: (on, id) => cmd([0x01, 0x04, 0x38, on ? 0x02 : 0x03], id),
+  autofocus: (on, id) => cmd([0x01, 0x04, 0x38, requireBoolean(on, 'autofocus') ? 0x02 : 0x03], id),
 
   exposureMode(mode, id) {
     const modes = { auto: 0x00, manual: 0x03, shutter: 0x0a, iris: 0x0b, bright: 0x0d }
@@ -47,7 +52,7 @@ const Commands = {
     return cmd([0x01, 0x04, 0x0b, actions[action]], id)
   },
 
-  backlight: (on, id) => cmd([0x01, 0x04, 0x33, on ? 0x02 : 0x03], id),
+  backlight: (on, id) => cmd([0x01, 0x04, 0x33, requireBoolean(on, 'backlight') ? 0x02 : 0x03], id),
 
   whiteBalance(mode, id) {
     const modes = {
@@ -67,8 +72,8 @@ const Commands = {
   presetSet: (n, id) => cmd([0x01, 0x04, 0x3f, 0x01, requireRange(n, 0, 254, 'preset number')], id),
   presetClear: (n, id) => cmd([0x01, 0x04, 0x3f, 0x00, requireRange(n, 0, 254, 'preset number')], id),
 
-  tallyRed: (on) => Buffer.from([0x81, 0x01, 0x7e, 0x01, 0x0a, 0x00, on ? 0x01 : 0x02, 0xff]),
-  tallyGreen: (on) => Buffer.from([0x81, 0x01, 0x7e, 0x01, 0x0a, 0x00, on ? 0x03 : 0x04, 0xff]),
+  tallyRed: (on) => Buffer.from([0x81, 0x01, 0x7e, 0x01, 0x0a, 0x00, requireBoolean(on, 'red tally') ? 0x01 : 0x02, 0xff]),
+  tallyGreen: (on) => Buffer.from([0x81, 0x01, 0x7e, 0x01, 0x0a, 0x00, requireBoolean(on, 'green tally') ? 0x03 : 0x04, 0xff]),
 
   panTilt(direction, panSpeed, tiltSpeed, id) {
     const dirs = {
