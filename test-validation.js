@@ -2,7 +2,7 @@ const assert = require('assert').strict
 const { parseUdpPort } = require('./companion-module/src/transport')
 assert.equal(parseUdpPort('3001'), 3001)
 assert.equal(parseUdpPort(undefined), 3001)
-for (const port of [0, 65536, 'abc', 1.5, Infinity]) {
+for (const port of [0, 65536, 'abc', 1.5, Infinity, '0xBB9', '3e3', true, ' 3001 ']) {
   assert.throws(() => parseUdpPort(port), /valid UDP port/)
 }
 
