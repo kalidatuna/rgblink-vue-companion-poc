@@ -1,10 +1,15 @@
 const assert = require('assert').strict
 const { parseUdpPort } = require('./companion-module/src/transport')
+const { RawViscaUdpClient } = require('./visca')
 assert.equal(parseUdpPort('3001'), 3001)
 assert.equal(parseUdpPort(undefined), 3001)
 for (const port of [0, 65536, 'abc', 1.5, Infinity, '0xBB9', '3e3', true, ' 3001 ']) {
   assert.throws(() => parseUdpPort(port), /valid UDP port/)
 }
+for (const host of [undefined, '', '  ', 123]) {
+  assert.throws(() => new RawViscaUdpClient({ host }), /host is required/)
+}
+assert.throws(() => new RawViscaUdpClient({ host: 'localhost', cameraId: 8 }), /camera ID/)
 
 // Exercise both shipped command builders to prevent validation drift.
 let checks = 0

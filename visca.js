@@ -4,8 +4,10 @@ const { parseUdpPort } = require('./companion-module/src/transport')
 
 class RawViscaUdpClient {
   constructor({ host, port = 3001, cameraId = 1 }) {
-    if (!host) throw new Error('host is required')
-    Object.assign(this, { host, port: parseUdpPort(port), cameraId })
+    if (typeof host !== 'string' || !host.trim()) throw new Error('host is required')
+    const validPort = parseUdpPort(port)
+    Commands.home(cameraId)
+    Object.assign(this, { host: host.trim(), port: validPort, cameraId })
     this.socket = dgram.createSocket('udp4')
   }
 
