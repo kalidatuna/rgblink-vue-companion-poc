@@ -29,7 +29,7 @@ for (const [actual, expected] of cases) {
 
 assert.throws(() => Commands.panTilt('invalid', 8, 8, 1), /unknown direction/)
 assert.throws(() => Commands.whiteBalance('invalid', 1), /unknown white balance mode/)
-for (const invalid of [NaN, Infinity, 1.5, '', null, 'abc']) {
+for (const invalid of [NaN, Infinity, 1.5, '', null, 'abc', true, false, [1], '1.0']) {
   assert.throws(() => Commands.zoomTele(invalid), /expected an integer/)
   assert.throws(() => Commands.presetRecall(invalid), /expected an integer/)
   assert.throws(() => Commands.panTilt('up', invalid, 8), /expected an integer/)

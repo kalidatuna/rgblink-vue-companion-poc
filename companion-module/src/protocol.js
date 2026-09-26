@@ -1,7 +1,7 @@
 'use strict'
 
 function clamp(n, lo, hi) {
-  if (n === null || n === '' || !Number.isInteger(Number(n))) {
+  if ((typeof n !== 'number' && (typeof n !== 'string' || !/^-?\d+$/.test(n))) || !Number.isInteger(Number(n))) {
     throw new Error(`expected an integer from ${lo} to ${hi}`)
   }
   return Math.max(lo, Math.min(hi, Number(n)))
