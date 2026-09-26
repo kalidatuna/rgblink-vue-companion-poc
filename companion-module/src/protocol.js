@@ -27,12 +27,12 @@ const Commands = {
   home: (id) => cmd([0x01, 0x06, 0x04], id),
 
   zoomStop: (id) => cmd([0x01, 0x04, 0x07, 0x00], id),
-  zoomTele: (speed = 3, id) => cmd([0x01, 0x04, 0x07, 0x20 + clamp(speed, 0, 15)], id),
-  zoomWide: (speed = 3, id) => cmd([0x01, 0x04, 0x07, 0x30 + clamp(speed, 0, 15)], id),
+  zoomTele: (speed = 3, id) => cmd([0x01, 0x04, 0x07, 0x20 + requireRange(speed, 0, 15, 'zoom speed')], id),
+  zoomWide: (speed = 3, id) => cmd([0x01, 0x04, 0x07, 0x30 + requireRange(speed, 0, 15, 'zoom speed')], id),
 
   focusStop: (id) => cmd([0x01, 0x04, 0x08, 0x00], id),
-  focusFar: (speed = 3, id) => cmd([0x01, 0x04, 0x08, 0x20 + clamp(speed, 0, 15)], id),
-  focusNear: (speed = 3, id) => cmd([0x01, 0x04, 0x08, 0x30 + clamp(speed, 0, 15)], id),
+  focusFar: (speed = 3, id) => cmd([0x01, 0x04, 0x08, 0x20 + requireRange(speed, 0, 15, 'focus speed')], id),
+  focusNear: (speed = 3, id) => cmd([0x01, 0x04, 0x08, 0x30 + requireRange(speed, 0, 15, 'focus speed')], id),
   autofocus: (on, id) => cmd([0x01, 0x04, 0x38, on ? 0x02 : 0x03], id),
 
   exposureMode(mode, id) {
@@ -85,7 +85,7 @@ const Commands = {
     const d = dirs[direction]
     if (!Object.prototype.hasOwnProperty.call(dirs, direction)) throw new Error(`unknown direction: ${direction}`)
     return cmd(
-      [0x01, 0x06, 0x01, clamp(panSpeed === undefined ? 8 : panSpeed, 1, 0x18), clamp(tiltSpeed === undefined ? 8 : tiltSpeed, 1, 0x14), ...d],
+      [0x01, 0x06, 0x01, requireRange(panSpeed === undefined ? 8 : panSpeed, 1, 0x18, 'pan speed'), requireRange(tiltSpeed === undefined ? 8 : tiltSpeed, 1, 0x14, 'tilt speed'), ...d],
       id,
     )
   },

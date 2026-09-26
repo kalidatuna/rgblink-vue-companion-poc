@@ -42,5 +42,11 @@ for (const id of [0, 8, -1]) {
 for (const n of [-1, 255]) {
   assert.throws(() => Commands.presetSet(n), /preset number/)
 }
+for (const speed of [-1, 16]) {
+  assert.throws(() => Commands.zoomTele(speed), /zoom speed/)
+  assert.throws(() => Commands.focusNear(speed), /focus speed/)
+}
+assert.throws(() => Commands.panTilt('left', 25, 8), /pan speed/)
+assert.throws(() => Commands.panTilt('left', 8, 21), /tilt speed/)
 
 console.log(`${cases.length + 2} Companion-module protocol checks passed`)
