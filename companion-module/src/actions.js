@@ -17,6 +17,12 @@ module.exports = function updateActions(self) {
   const send = (buffer) => self.sendVisca(buffer)
 
   self.setActionDefinitions({
+    power: {
+      name: 'Power',
+      options: [{ id: 'state', type: 'dropdown', label: 'State', default: 'on', choices: onOff }],
+      callback: async (event) => send(Commands.power(requireChoice(event.options.state, ['on', 'off'], 'power state') === 'on', cameraId())),
+    },
+
     pan_tilt: {
       name: 'Pan / Tilt',
       options: [

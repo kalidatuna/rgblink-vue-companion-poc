@@ -10,6 +10,7 @@ Before disabling dry-run, confirm the camera firmware expects raw VISCA UDP on t
 
 Implemented actions:
 
+- power on/off
 - pan/tilt in eight directions + stop
 - HOME
 - variable zoom tele/wide + stop
@@ -22,4 +23,3 @@ Implemented actions:
 - backlight on/off
 - red tally on/off
 - green tally on/off
-

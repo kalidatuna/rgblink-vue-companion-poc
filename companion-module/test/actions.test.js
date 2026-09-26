@@ -19,6 +19,7 @@ const self = {
 updateActions(self)
 
 const expectedActions = [
+  'power',
   'pan_tilt',
   'home',
   'zoom',
@@ -36,6 +37,7 @@ const expectedActions = [
 assert.deepEqual(Object.keys(definitions), expectedActions)
 
 async function run() {
+  await definitions.power.callback({ options: { state: 'on' } })
   await definitions.pan_tilt.callback({ options: { direction: 'left', panSpeed: 10, tiltSpeed: 8 } })
   await definitions.zoom.callback({ options: { direction: 'tele', speed: 4 } })
   await definitions.focus.callback({ options: { direction: 'near', speed: 3 } })
@@ -50,6 +52,7 @@ async function run() {
   await definitions.home.callback({ options: {} })
 
   assert.deepEqual(sent, [
+    '8101040002FF',
     '810106010A080103FF',
     '8101040724FF',
     '8101040833FF',
@@ -69,10 +72,11 @@ async function run() {
     ['focus', { direction: 'invalid', speed: 3 }],
     ['preset', { operation: 'invalid', number: 1 }],
     ['autofocus', { state: 'invalid' }],
+    ['power', { state: 'invalid' }],
   ]) {
     await assert.rejects(definitions[action].callback({ options }), /unknown/)
   }
-  assert.equal(sent.length, 12)
+  assert.equal(sent.length, 13)
 
   console.log(`${expectedActions.length} Companion actions registered; ${sent.length} callbacks verified`)
 }
