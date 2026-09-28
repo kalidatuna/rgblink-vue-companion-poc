@@ -9,8 +9,10 @@ Run from the repository root:
 ```sh
 node test.js
 node test-validation.js
+node test-transport.js
 node companion-module/test/protocol.test.js
 node companion-module/test/actions.test.js
+node companion-module/test/transport.test.js
 ```
 
 Both `visca.js` and `companion-module/src/protocol.js` contain command builders. Review both when changing packet behavior, and add expected-byte fixtures plus invalid-input checks. Preserve dry-run defaults. Tests must not open sockets or require physical hardware. Document manual/firmware evidence for protocol changes; passing packet tests alone is not live-camera validation.
@@ -30,4 +32,4 @@ The module declares Node `^22.20` and Yarn `4.17.0`. Packaging also requires the
 
 ## Continuous integration
 
-CI runs the offline suite on every push and pull request with read-only repository permissions. Action versions are pinned to commit IDs. The matrix covers Node.js 22 and 24. Run `npm test` from the root for the complete suite; no dependency installation is needed. The module directory also exposes `npm test` for its two local suites.
+CI runs the offline suite on every push and pull request with read-only repository permissions. Action versions are pinned to commit IDs. The matrix covers Node.js 22 and 24. Run `npm test` from the root for the complete suite; no dependency installation is needed. The module directory also exposes `npm test` for its three local suites.

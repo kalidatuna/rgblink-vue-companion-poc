@@ -6,7 +6,7 @@
   "scripts": {
     "package": "companion-module-build",
     "test:protocol": "node test/protocol.test.js",
-    "test": "node test/protocol.test.js && node test/actions.test.js"
+    "test": "node test/protocol.test.js && node test/actions.test.js && node test/transport.test.js"
   },
   "license": "MIT",
   "repository": {
