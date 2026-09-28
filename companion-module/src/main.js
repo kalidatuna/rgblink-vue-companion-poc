@@ -45,7 +45,8 @@ class RGBlinkVueInstance extends InstanceBase {
       return
     }
 
-    if (!this.config.host) {
+    this.host = typeof this.config.host === 'string' ? this.config.host.trim() : ''
+    if (!this.host) {
       this.updateStatus(InstanceStatus.BadConfig, 'Target host is required for live sending')
       return
     }
@@ -73,12 +74,12 @@ class RGBlinkVueInstance extends InstanceBase {
       return
     }
 
-    if (!this.socket || !this.config.host) {
+    if (!this.socket || !this.host) {
       throw new Error('Live transport is not configured')
     }
 
     await new Promise((resolve, reject) => {
-      this.socket.send(buffer, this.port, this.config.host, (err) => (err ? reject(err) : resolve()))
+      this.socket.send(buffer, this.port, this.host, (err) => (err ? reject(err) : resolve()))
     })
   }
 
